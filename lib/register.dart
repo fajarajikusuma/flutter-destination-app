@@ -69,8 +69,6 @@ class _RegisterPageState extends State<RegisterPage> {
             );
           },
         );
-        // navigate to home page
-
       }
     });
   }

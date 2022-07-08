@@ -85,48 +85,50 @@ class _BerandaState extends State<Beranda> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              SizedBox(
-                height: 70,
-              ),
-              Row(
-                children: [
-                  SizedBox(
-                    width: 40,
-                  ),
-                  Container(
-                    height: 40,
-                    width: 40,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.blue, width: 2),
-                      borderRadius: BorderRadius.circular(100),
-                      image: DecorationImage(
-                        image: AssetImage('assets/img/logo.png'),
-                        fit: BoxFit.cover,
+              SafeArea(
+                child: Padding(
+                  padding: EdgeInsets.only(left: 25, right: 20, top: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.only(
+                            left: 8, right: 8, top: 2, bottom: 2),
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          color: Colors.blue[50],
+                        ),
+                        child: Row(
+                          children: <Widget>[
+                            Icon(
+                              Icons.people_alt,
+                              color: Colors.blue,
+                              size: 40,
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Text(
+                              "Hi! Dimas 😊",
+                              style: TextStyle(
+                                  fontSize: 24, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
+                      //
+                      IconButton(
+                        icon: Icon(
+                          Icons.notifications,
+                          color: Colors.blue,
+                          size: 30,
+                        ),
+                        onPressed: () {},
+                      ),
+                    ],
                   ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    'Mayeng',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  //make icon bell
-                  SizedBox(
-                    width: 170,
-                  ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.notifications,
-                      size: 30,
-                    ),
-                    onPressed: () {},
-                  ),
-                ],
+                ),
               ),
               SizedBox(
                 height: 20,
