@@ -2,6 +2,7 @@ import 'package:destination_app/detailItem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'detailItem.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CardItem {
   final String title;
@@ -70,17 +71,18 @@ class _BerandaState extends State<Beranda> {
               ),
               Text(
                 item.title,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w600),
               ),
               Text(
                 item.price,
-                style: TextStyle(fontSize: 15),
+                style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.indigo)
               ),
             ],
           ),
         );
     return Scaffold(
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -97,22 +99,20 @@ class _BerandaState extends State<Beranda> {
                         height: 50,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30),
-                          color: Colors.blue[50],
+                          color: Colors.indigo[50],
                         ),
                         child: Row(
                           children: <Widget>[
-                            Icon(
-                              Icons.people_alt,
-                              color: Colors.blue,
-                              size: 40,
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Text(
-                              "Hi! Dimas 😊",
-                              style: TextStyle(
-                                  fontSize: 24, fontWeight: FontWeight.bold),
+                            Padding(
+                              padding: EdgeInsets.only(right: 10, left: 10),
+                              child: Text(
+                                "Hi! Dimas Adi",
+                                style: GoogleFonts.poppins(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.indigo,
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -121,8 +121,8 @@ class _BerandaState extends State<Beranda> {
                       IconButton(
                         icon: Icon(
                           Icons.notifications,
-                          color: Colors.blue,
-                          size: 30,
+                          color: Colors.indigo,
+                          size: 24,
                         ),
                         onPressed: () {},
                       ),
@@ -136,33 +136,34 @@ class _BerandaState extends State<Beranda> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: Container(
+                  height: 56,
                   child: TextField(
                     // controller: _usernameController,
                     decoration: InputDecoration(
-                      labelText: 'Search',
-                      labelStyle: TextStyle(
-                        fontSize: 18,
+                      labelText: 'Search for your destination',
+                      labelStyle: GoogleFonts.poppins(
+                        fontSize: 16,
                       ),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(30),
                       ),
                     ),
                   ),
                 ),
               ),
               SizedBox(
-                height: 40,
+                height: 24,
               ),
               Container(
                 child: Row(
                   children: [
                     SizedBox(
-                      width: 30,
+                      width: 24,
                     ),
                     Text(
                       'Special For You',
-                      style: TextStyle(
-                        fontSize: 25,
+                      style: GoogleFonts.poppins(
+                        fontSize: 22,
                         fontStyle: FontStyle.normal,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
@@ -179,10 +180,11 @@ class _BerandaState extends State<Beranda> {
                 child: Container(
                   height: 200,
                   child: ListView.separated(
+                    physics: BouncingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     itemCount: items.length,
                     separatorBuilder: (context, index) => SizedBox(
-                      width: 20,
+                      width: 16,
                     ),
                     itemBuilder: (context, index) {
                       return card(item: items[index]);
@@ -197,12 +199,12 @@ class _BerandaState extends State<Beranda> {
                 child: Row(
                   children: [
                     SizedBox(
-                      width: 30,
+                      width: 24,
                     ),
                     Text(
                       'Popular Places',
-                      style: TextStyle(
-                        fontSize: 25,
+                      style: GoogleFonts.poppins(
+                        fontSize: 22,
                         fontStyle: FontStyle.normal,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
@@ -211,13 +213,10 @@ class _BerandaState extends State<Beranda> {
                   ],
                 ),
               ),
-              SizedBox(
-                height: 20,
-              ),
               Padding(
                 padding: EdgeInsets.only(left: 20, right: 20),
                 child: Container(
-                  height: 310,
+                  height: 200,
                   width: double.infinity,
                   child: GestureDetector(
                     onTap: () {
@@ -228,72 +227,71 @@ class _BerandaState extends State<Beranda> {
                     },
                     child: Container(
                       child: ListView(
-                        scrollDirection: Axis.vertical,
+                        physics: BouncingScrollPhysics(),
                         children: [
                           Container(
-                            height: 80,
+                            height: 120,
                             child: Column(
                               children: [
                                 Expanded(
                                   child: Card(
-                                    elevation: 3,
+                                    elevation: 2,
                                     shadowColor: Colors.black,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     ),
-                                    child: Column(
+                                    child: Row(
                                       children: [
-                                        ListTile(
-                                          leading: Container(
-                                            height: 100,
-                                            width: 100,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              image: DecorationImage(
+                                        Expanded(
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            child: Material(
+                                              child: Ink.image(
                                                 image: AssetImage(
                                                     'assets/img/1.jpg'),
                                                 fit: BoxFit.cover,
+                                                child: InkWell(
+                                                  onTap: () {},
+                                                ),
                                               ),
                                             ),
                                           ),
-                                          title: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                        ),
+                                        Container(
+                                          margin: EdgeInsets.only(
+                                              left: 10),
+                                          width: 200,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text(
                                                 'Bali',
-                                                style: TextStyle(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold,
+                                                style: GoogleFonts.poppins(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w600,
                                                 ),
                                               ),
                                               Text(
-                                                '"Lorem ipsum dolor sit amet"',
-                                                style: TextStyle(
-                                                    fontSize: 13,
-                                                    fontStyle:
-                                                        FontStyle.italic),
-                                              ),
-                                            ],
-                                          ),
-                                          subtitle: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              SizedBox(
-                                                height: 5,
+                                              'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+                                                style: GoogleFonts.poppins(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
                                               ),
                                               Text(
                                                 'Rp. 1.000.000',
-                                                style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold,
+                                                style: GoogleFonts.poppins(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.indigo,
                                                 ),
                                               ),
                                             ],
                                           ),
-                                        )
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -301,280 +299,145 @@ class _BerandaState extends State<Beranda> {
                               ],
                             ),
                           ),
-                          Container(
-                            height: 80,
-                            child: Column(
-                              children: [
-                                Expanded(
-                                  child: Card(
-                                    elevation: 3,
-                                    shadowColor: Colors.black,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        ListTile(
-                                          leading: Container(
-                                            height: 100,
-                                            width: 100,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              image: DecorationImage(
-                                                image: AssetImage(
-                                                    'assets/img/1.jpg'),
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                          ),
-                                          title: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'Bali',
-                                                style: TextStyle(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                              Text(
-                                                '"Lorem ipsum dolor sit amet"',
-                                                style: TextStyle(
-                                                    fontSize: 13,
-                                                    fontStyle:
-                                                        FontStyle.italic),
-                                              ),
-                                            ],
-                                          ),
-                                          subtitle: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                SizedBox(
-                                                  height: 5,
-                                                ),
-                                                Text(
-                                                  'Rp. 1.000.000',
-                                                  style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ]),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                          SizedBox(
+                            height: 4,
                           ),
                           Container(
-                            height: 80,
+                            height: 120,
                             child: Column(
                               children: [
                                 Expanded(
                                   child: Card(
-                                    elevation: 3,
+                                    elevation: 2,
                                     shadowColor: Colors.black,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     ),
-                                    child: Column(
+                                    child: Row(
                                       children: [
-                                        ListTile(
-                                          leading: Container(
-                                            height: 100,
-                                            width: 100,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              image: DecorationImage(
+                                        Expanded(
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            child: Material(
+                                              child: Ink.image(
                                                 image: AssetImage(
                                                     'assets/img/1.jpg'),
                                                 fit: BoxFit.cover,
+                                                child: InkWell(
+                                                  onTap: () {},
+                                                ),
                                               ),
                                             ),
                                           ),
-                                          title: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                        ),
+                                        Container(
+                                          margin: EdgeInsets.only(
+                                              left: 10),
+                                          width: 200,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text(
                                                 'Bali',
-                                                style: TextStyle(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold,
+                                                style: GoogleFonts.poppins(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w600,
                                                 ),
                                               ),
                                               Text(
-                                                '"Lorem ipsum dolor sit amet"',
-                                                style: TextStyle(
-                                                    fontSize: 13,
-                                                    fontStyle:
-                                                        FontStyle.italic),
-                                              ),
-                                            ],
-                                          ),
-                                          subtitle: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                SizedBox(
-                                                  height: 5,
+                                              'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+                                                style: GoogleFonts.poppins(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w500,
                                                 ),
-                                                Text(
-                                                  'Rp. 1.000.000',
-                                                  style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ]),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            height: 80,
-                            child: Column(
-                              children: [
-                                Expanded(
-                                  child: Card(
-                                    elevation: 3,
-                                    shadowColor: Colors.black,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        ListTile(
-                                          leading: Container(
-                                            height: 100,
-                                            width: 100,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              image: DecorationImage(
-                                                image: AssetImage(
-                                                    'assets/img/1.jpg'),
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                          ),
-                                          title: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'Bali',
-                                                style: TextStyle(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                              Text(
-                                                '"Lorem ipsum dolor sit amet"',
-                                                style: TextStyle(
-                                                    fontSize: 13,
-                                                    fontStyle:
-                                                        FontStyle.italic),
-                                              ),
-                                            ],
-                                          ),
-                                          subtitle: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                SizedBox(
-                                                  height: 5,
-                                                ),
-                                                Text(
-                                                  'Rp. 1.000.000',
-                                                  style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ]),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            height: 80,
-                            child: Column(
-                              children: [
-                                Expanded(
-                                  child: Card(
-                                    elevation: 3,
-                                    shadowColor: Colors.black,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        ListTile(
-                                          leading: Container(
-                                            height: 100,
-                                            width: 100,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              image: DecorationImage(
-                                                image: AssetImage(
-                                                    'assets/img/1.jpg'),
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                          ),
-                                          title: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'Bali',
-                                                style: TextStyle(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                              Text(
-                                                '"Lorem ipsum dolor sit amet"',
-                                                style: TextStyle(
-                                                    fontSize: 13,
-                                                    fontStyle:
-                                                        FontStyle.italic),
-                                              ),
-                                            ],
-                                          ),
-                                          subtitle: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              SizedBox(
-                                                height: 5,
                                               ),
                                               Text(
                                                 'Rp. 1.000.000',
-                                                style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold,
+                                                style: GoogleFonts.poppins(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.indigo,
                                                 ),
                                               ),
                                             ],
                                           ),
-                                        )
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 4,
+                          ),
+                          Container(
+                            height: 120,
+                            child: Column(
+                              children: [
+                                Expanded(
+                                  child: Card(
+                                    elevation: 2,
+                                    shadowColor: Colors.black,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            child: Material(
+                                              child: Ink.image(
+                                                image: AssetImage(
+                                                    'assets/img/1.jpg'),
+                                                fit: BoxFit.cover,
+                                                child: InkWell(
+                                                  onTap: () {},
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          margin: EdgeInsets.only(
+                                              left: 10),
+                                          width: 200,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'Bali',
+                                                style: GoogleFonts.poppins(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                              Text(
+                                              'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+                                                style: GoogleFonts.poppins(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                              Text(
+                                                'Rp. 1.000.000',
+                                                style: GoogleFonts.poppins(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.indigo,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ),

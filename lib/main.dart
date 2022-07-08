@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'home.dart';
 
 void main() {
@@ -12,9 +14,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flutter Destination App',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.indigo,
       ),
       debugShowCheckedModeBanner: false,
       home: MyHomePage(),
@@ -24,7 +26,7 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatelessWidget {
   static const String imageUrl =
-      'https://www.setaswall.com/wp-content/uploads/2019/03/Railroad-Grass-Trees-1080x2400-380x844.jpg';
+      'https://cdn.pixabay.com/photo/2015/10/30/20/13/sunrise-1014712_960_720.jpg';
 
   @override
   Widget build(BuildContext context) {
@@ -34,94 +36,15 @@ class MyHomePage extends StatelessWidget {
         height: double.infinity,
         decoration: BoxDecoration(
           image: DecorationImage(
-            fit: BoxFit.fitWidth,
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+                Colors.black.withOpacity(0.3), BlendMode.darken),
             image: NetworkImage(imageUrl),
           ),
         ),
         child: Stack(
           // fit: StackFit.expand,
           children: [
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                height: 100,
-                color: Colors.black45.withOpacity(0.25),
-              ),
-            ),
-            Positioned(
-              top: 100,
-              left: 0,
-              right: 0,
-              child: Container(
-                height: 100,
-                color: Colors.black45.withOpacity(0.25),
-              ),
-            ),
-            Positioned(
-              top: 200,
-              left: 0,
-              right: 0,
-              child: Container(
-                height: 100,
-                color: Colors.black26.withOpacity(0.25),
-              ),
-            ),
-            Positioned(
-              top: 300,
-              left: 0,
-              right: 0,
-              child: Container(
-                height: 100,
-                color: Colors.black26.withOpacity(0.35),
-              ),
-            ),
-            Positioned(
-              top: 400,
-              left: 0,
-              right: 0,
-              child: Container(
-                height: 100,
-                color: Colors.black12.withOpacity(0.45),
-              ),
-            ),
-            Positioned(
-              top: 500,
-              left: 0,
-              right: 0,
-              child: Container(
-                height: 100,
-                color: Colors.black12.withOpacity(0.5),
-              ),
-            ),
-            Positioned(
-              top: 600,
-              left: 0,
-              right: 0,
-              child: Container(
-                height: 100,
-                color: Colors.black12.withOpacity(0.5),
-              ),
-            ),
-            Positioned(
-              top: 700,
-              left: 0,
-              right: 0,
-              child: Container(
-                height: 100,
-                color: Colors.black.withOpacity(0.5),
-              ),
-            ),
-            Positioned(
-              top: 800,
-              left: 0,
-              right: 0,
-              child: Container(
-                height: 100,
-                color: Colors.black.withOpacity(0.7),
-              ),
-            ),
             Align(
               alignment: Alignment.bottomLeft,
               heightFactor: 4,
@@ -131,9 +54,6 @@ class MyHomePage extends StatelessWidget {
                 // color: Colors.red.withOpacity(0.5),
                 child: Column(
                   children: [
-                    SizedBox(
-                      height: 30,
-                    ),
                     Container(
                       child: Row(
                         children: [
@@ -142,8 +62,8 @@ class MyHomePage extends StatelessWidget {
                           ),
                           Text(
                             'Mangkat',
-                            style: TextStyle(
-                              fontSize: 50,
+                            style: GoogleFonts.poppins(
+                              fontSize: 40,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
                             ),
@@ -158,9 +78,9 @@ class MyHomePage extends StatelessWidget {
                             width: 20,
                           ),
                           Text(
-                            '"Lorem Ipsum is simply dummy text of the printing."',
-                            style: TextStyle(
-                              // fontSize: 50,
+                            '"Lorem Ipsum is simply dummy text \n of the printing."',
+                            style: GoogleFonts.poppins(
+                              fontSize: 14,
                               fontStyle: FontStyle.italic,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
@@ -173,36 +93,35 @@ class MyHomePage extends StatelessWidget {
                       height: 30,
                     ),
                     Container(
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 20,
-                          ),
-                          MaterialButton(
-                            height: 50,
-                            minWidth: 150,
-                            textColor: Colors.white,
-                            color: Colors.green,
-                            child: Text(
-                              "Get Started",
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => HomePage(),
-                                ),
-                              );
-                            },
-                            shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(30.0),
+                      margin: EdgeInsets.symmetric(horizontal: 20),
+                      child: Expanded(
+                        child: MaterialButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => HomePage(),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            'Get Started',
+                            style: GoogleFonts.poppins(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
                             ),
                           ),
-                        ],
+                          color: Colors.indigo,
+                          elevation: 0,
+                          minWidth: double.infinity,
+                          height: 50,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
                       ),
-                    ),
+                    )
                   ],
                 ),
               ),

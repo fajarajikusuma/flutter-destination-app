@@ -56,11 +56,11 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.all(8.0),
           child: GNav(
             gap: 8,
-            color: Colors.blue,
-            activeColor: Colors.blue,
+            color: Colors.indigo,
+            activeColor: Colors.indigo,
             iconSize: 35,
             padding: EdgeInsets.symmetric(horizontal: 15, vertical: 7),
-            tabBackgroundColor: Colors.grey.shade300,
+            tabBackgroundColor: Colors.indigo[50],
             backgroundColor: Colors.white,
             tabs: [
               GButton(

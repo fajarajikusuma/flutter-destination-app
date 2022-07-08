@@ -37,7 +37,8 @@ dependencies:
   http:
   flutter_search_bar:
   get_storage:
-  google_nav_bar: ^5.0.6 
+  google_nav_bar: ^5.0.6
+  google_fonts:
 
 dev_dependencies:
   flutter_test:

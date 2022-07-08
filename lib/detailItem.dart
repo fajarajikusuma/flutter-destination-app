@@ -12,28 +12,17 @@ class _DetailItemState extends State<DetailItem> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.blue,
-      appBar: AppBar(
-        backgroundColor: Colors.blue,
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: Icon(Icons.more_vert),
-            onPressed: () {},
-          ),
-        ],
-      ),
+      backgroundColor: Colors.transparent,
       body: SingleChildScrollView(
+          child: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/img/1.jpg'),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+                Colors.black.withOpacity(0.5), BlendMode.darken),
+          ),
+        ),
         child: Column(
           children: [
             SizedBox(
@@ -41,13 +30,13 @@ class _DetailItemState extends State<DetailItem> {
               child: Stack(
                 children: [
                   Container(
-                    margin: EdgeInsets.only(top: size.height * 0.4),
+                    margin: EdgeInsets.only(top: size.height * 0.5),
                     padding: EdgeInsets.only(
-                      top: size.height * 0.12,
+                      top: 25,
                       left: 25,
                       right: 25,
                     ),
-                    height: 700,
+                    height: 380,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
@@ -110,14 +99,14 @@ class _DetailItemState extends State<DetailItem> {
                                 height: 50,
                                 width: 58,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  border: Border.all(color: Colors.blue),
+                                  borderRadius: BorderRadius.circular(30),
+                                  border: Border.all(color: Colors.indigo),
                                 ),
                                 child: IconButton(
                                   onPressed: () {},
                                   icon: Icon(
                                     Icons.card_giftcard,
-                                    color: Colors.blue,
+                                    color: Colors.indigo,
                                   ),
                                 ),
                               ),
@@ -127,8 +116,8 @@ class _DetailItemState extends State<DetailItem> {
                                   child: FlatButton(
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
-                                            BorderRadius.circular(20)),
-                                    color: Colors.blue,
+                                            BorderRadius.circular(30)),
+                                    color: Colors.indigo,
                                     onPressed: () {},
                                     child: Text(
                                       'Order Now'.toUpperCase(),
@@ -152,6 +141,35 @@ class _DetailItemState extends State<DetailItem> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        SizedBox(
+                          height: 40,
+                        ),
+                        SizedBox(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                icon: Icon(
+                                  Icons.arrow_back,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () {},
+                                icon: Icon(
+                                  Icons.share,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
                         Text(
                           'A Beautiful Place',
                           style: TextStyle(
@@ -167,7 +185,7 @@ class _DetailItemState extends State<DetailItem> {
                           ),
                         ),
                         SizedBox(
-                          height: 180,
+                          height: 120,
                         ),
                         Row(
                           children: [
@@ -185,15 +203,15 @@ class _DetailItemState extends State<DetailItem> {
                                 ],
                               ),
                             ),
-                            SizedBox(
-                              width: 60,
-                            ),
-                            Expanded(
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: Image.asset('assets/img/1.jpg'),
-                              ),
-                            )
+                            // SizedBox(
+                            //   width: 60,
+                            // ),
+                            // Expanded(
+                            //   child: ClipRRect(
+                            //     borderRadius: BorderRadius.circular(20),
+                            //     child: Image.asset('assets/img/1.jpg'),
+                            //   ),
+                            // )
                           ],
                         ),
                       ],
@@ -204,7 +222,7 @@ class _DetailItemState extends State<DetailItem> {
             ),
           ],
         ),
-      ),
+      )),
     );
   }
 }
@@ -232,7 +250,7 @@ class _CardCounterState extends State<CardCounter> {
               borderRadius: BorderRadius.circular(30),
             ),
             onPressed: () {},
-            child: Icon(Icons.remove),
+            child: Icon(Icons.remove, color: Colors.white,),
           ),
         ),
         Padding(
@@ -249,13 +267,13 @@ class _CardCounterState extends State<CardCounter> {
           width: 40,
           height: 32,
           child: MaterialButton(
-            color: Colors.blue,
+            color: Colors.indigo,
             padding: EdgeInsets.zero,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30),
             ),
             onPressed: () {},
-            child: Icon(Icons.add),
+            child: Icon(Icons.add,color: Colors.white,),
           ),
         ),
       ],
