@@ -2,9 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'home.dart';
+import 'package:statusbarz/statusbarz.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(Main());
+}
+
+class Main extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return StatusbarzCapturer(
+      child: MaterialApp(
+        navigatorObservers: [Statusbarz.instance.observer],
+        debugShowCheckedModeBanner: false,
+        home: MyApp(),
+      ),
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -25,8 +39,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  static const String imageUrl =
-      'https://cdn.pixabay.com/photo/2015/10/30/20/13/sunrise-1014712_960_720.jpg';
+  static const String imageUrl = 'assets/img/main_bg.jpg';
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +52,7 @@ class MyHomePage extends StatelessWidget {
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(
                 Colors.black.withOpacity(0.3), BlendMode.darken),
-            image: NetworkImage(imageUrl),
+            image: AssetImage(imageUrl),
           ),
         ),
         child: Stack(
