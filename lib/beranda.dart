@@ -71,12 +71,14 @@ class _BerandaState extends State<Beranda> {
               ),
               Text(
                 item.title,
-                style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w600),
+                style: GoogleFonts.poppins(
+                    fontSize: 18, fontWeight: FontWeight.w600),
               ),
-              Text(
-                item.price,
-                style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.indigo)
-              ),
+              Text(item.price,
+                  style: GoogleFonts.poppins(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.indigo)),
             ],
           ),
         );
@@ -134,21 +136,43 @@ class _BerandaState extends State<Beranda> {
                 height: 20,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: Container(
-                  height: 56,
-                  child: TextField(
-                    // controller: _usernameController,
-                    decoration: InputDecoration(
-                      labelText: 'Search for your destination',
-                      labelStyle: GoogleFonts.poppins(
-                        fontSize: 16,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.75,
+                      child: TextField(
+                        decoration: InputDecoration(
+                          labelText: 'Search for your destination',
+                          labelStyle: GoogleFonts.poppins(
+                            fontSize: 16,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.12,
+                      child: MaterialButton(
+                        onPressed: () {},
+                        child: Icon(
+                          Icons.search,
+                          color: Colors.white,
+                          size: 24,
+                        ),
+                        color: Colors.indigo,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        height: 50,
+                        minWidth: double.infinity,
+                        padding: EdgeInsets.zero,
+                      ),
+                    )
+                  ],
                 ),
               ),
               SizedBox(
@@ -196,27 +220,40 @@ class _BerandaState extends State<Beranda> {
                 height: 20,
               ),
               Container(
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: 24,
-                    ),
-                    Text(
-                      'Popular Places',
-                      style: GoogleFonts.poppins(
-                        fontSize: 22,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 20, left: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Popular Places',
+                        style: GoogleFonts.poppins(
+                          fontSize: 22,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
                       ),
-                    ),
-                  ],
+                      TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          'See All',
+                          style: GoogleFonts.poppins(
+                            fontSize: 16,
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.indigo,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Padding(
                 padding: EdgeInsets.only(left: 20, right: 20),
                 child: Container(
-                  height: 200,
+                  height: 400,
                   width: double.infinity,
                   child: GestureDetector(
                     onTap: () {
@@ -259,13 +296,13 @@ class _BerandaState extends State<Beranda> {
                                           ),
                                         ),
                                         Container(
-                                          margin: EdgeInsets.only(
-                                              left: 10),
+                                          margin: EdgeInsets.only(left: 10),
                                           width: 200,
                                           child: Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Text(
                                                 'Bali',
@@ -275,7 +312,7 @@ class _BerandaState extends State<Beranda> {
                                                 ),
                                               ),
                                               Text(
-                                              'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+                                                'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
                                                 style: GoogleFonts.poppins(
                                                   fontSize: 12,
                                                   fontWeight: FontWeight.w500,
@@ -332,13 +369,13 @@ class _BerandaState extends State<Beranda> {
                                           ),
                                         ),
                                         Container(
-                                          margin: EdgeInsets.only(
-                                              left: 10),
+                                          margin: EdgeInsets.only(left: 10),
                                           width: 200,
                                           child: Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Text(
                                                 'Bali',
@@ -348,7 +385,7 @@ class _BerandaState extends State<Beranda> {
                                                 ),
                                               ),
                                               Text(
-                                              'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+                                                'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
                                                 style: GoogleFonts.poppins(
                                                   fontSize: 12,
                                                   fontWeight: FontWeight.w500,
@@ -405,13 +442,13 @@ class _BerandaState extends State<Beranda> {
                                           ),
                                         ),
                                         Container(
-                                          margin: EdgeInsets.only(
-                                              left: 10),
+                                          margin: EdgeInsets.only(left: 10),
                                           width: 200,
                                           child: Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Text(
                                                 'Bali',
@@ -421,7 +458,7 @@ class _BerandaState extends State<Beranda> {
                                                 ),
                                               ),
                                               Text(
-                                              'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+                                                'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
                                                 style: GoogleFonts.poppins(
                                                   fontSize: 12,
                                                   fontWeight: FontWeight.w500,

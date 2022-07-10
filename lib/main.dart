@@ -47,7 +47,7 @@ class MyHomePage extends StatelessWidget {
           children: [
             Align(
               alignment: Alignment.bottomLeft,
-              heightFactor: 4,
+              heightFactor: 5,
               child: Container(
                 height: 200,
                 width: double.infinity,

@@ -36,7 +36,7 @@ class _DetailItemState extends State<DetailItem> {
                       left: 25,
                       right: 25,
                     ),
-                    height: 380,
+                    height: 470,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
@@ -46,6 +46,9 @@ class _DetailItemState extends State<DetailItem> {
                     ),
                     child: Column(
                       children: [
+                        SizedBox(
+                          height: 30,
+                        ),
                         Row(
                           children: [
                             Column(
@@ -69,7 +72,7 @@ class _DetailItemState extends State<DetailItem> {
                           'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
                         ),
                         SizedBox(
-                          height: 15,
+                          height: 50,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -185,7 +188,7 @@ class _DetailItemState extends State<DetailItem> {
                           ),
                         ),
                         SizedBox(
-                          height: 120,
+                          height: 190,
                         ),
                         Row(
                           children: [
@@ -203,15 +206,6 @@ class _DetailItemState extends State<DetailItem> {
                                 ],
                               ),
                             ),
-                            // SizedBox(
-                            //   width: 60,
-                            // ),
-                            // Expanded(
-                            //   child: ClipRRect(
-                            //     borderRadius: BorderRadius.circular(20),
-                            //     child: Image.asset('assets/img/1.jpg'),
-                            //   ),
-                            // )
                           ],
                         ),
                       ],
@@ -250,7 +244,10 @@ class _CardCounterState extends State<CardCounter> {
               borderRadius: BorderRadius.circular(30),
             ),
             onPressed: () {},
-            child: Icon(Icons.remove, color: Colors.white,),
+            child: Icon(
+              Icons.remove,
+              color: Colors.white,
+            ),
           ),
         ),
         Padding(
@@ -273,7 +270,10 @@ class _CardCounterState extends State<CardCounter> {
               borderRadius: BorderRadius.circular(30),
             ),
             onPressed: () {},
-            child: Icon(Icons.add,color: Colors.white,),
+            child: Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
           ),
         ),
       ],
