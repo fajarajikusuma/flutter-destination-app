@@ -107,32 +107,36 @@ class MyHomePage extends StatelessWidget {
                     ),
                     Container(
                       margin: EdgeInsets.symmetric(horizontal: 20),
-                      child: Expanded(
-                        child: MaterialButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => HomePage(),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: MaterialButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => HomePage(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                'Get Started',
+                                style: GoogleFonts.poppins(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
                               ),
-                            );
-                          },
-                          child: Text(
-                            'Get Started',
-                            style: GoogleFonts.poppins(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                              color: Colors.indigo,
+                              elevation: 0,
+                              minWidth: double.infinity,
+                              height: 50,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
                             ),
                           ),
-                          color: Colors.indigo,
-                          elevation: 0,
-                          minWidth: double.infinity,
-                          height: 50,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                        ),
+                        ],
                       ),
                     )
                   ],

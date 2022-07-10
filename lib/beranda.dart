@@ -91,13 +91,13 @@ class _BerandaState extends State<Beranda> {
             children: <Widget>[
               SafeArea(
                 child: Padding(
-                  padding: EdgeInsets.only(left: 25, right: 20, top: 20),
+                  padding: EdgeInsets.only(left: 20, right: 20, top: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Container(
                         padding: EdgeInsets.only(
-                            left: 8, right: 8, top: 2, bottom: 2),
+                            left: 10, right: 10, top: 2, bottom: 2),
                         height: 50,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30),

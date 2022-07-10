@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
             gap: 8,
             color: Colors.indigo,
             activeColor: Colors.indigo,
-            iconSize: 35,
+            iconSize: 25,
             padding: EdgeInsets.symmetric(horizontal: 15, vertical: 7),
             tabBackgroundColor: Colors.indigo[50],
             backgroundColor: Colors.white,
