@@ -79,16 +79,38 @@ class _DetailItemState extends State<DetailItem> {
                           children: [
                             CardCounter(),
                             Container(
-                              padding: EdgeInsets.all(2),
-                              height: 32,
-                              width: 32,
+                              // margin: EdgeInsets.only(right: 20),
+                              padding: EdgeInsets.only(right: 10, left: 10),
+                              width: 70,
+                              height: 50,
                               decoration: BoxDecoration(
-                                color: Colors.red,
-                                shape: BoxShape.circle,
+                                color: Colors.indigo[50],
+                                borderRadius: BorderRadius.circular(25),
                               ),
-                              child: Icon(
-                                Icons.favorite,
-                                color: Colors.white,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    padding: EdgeInsets.all(2),
+                                    height: 32,
+                                    width: 32,
+                                    decoration: BoxDecoration(
+                                      color: Colors.black,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Icon(
+                                      Icons.star,
+                                      color: Colors.yellow,
+                                    ),
+                                  ),
+                                  Text(
+                                    '5',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20),
+                                  ),
+                                ],
                               ),
                             ),
                           ],

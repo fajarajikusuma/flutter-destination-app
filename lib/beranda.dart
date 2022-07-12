@@ -1,4 +1,5 @@
 import 'package:destination_app/detailItem.dart';
+import 'package:destination_app/notification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'detailItem.dart';
@@ -126,55 +127,62 @@ class _BerandaState extends State<Beranda> {
                           color: Colors.indigo,
                           size: 24,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => NotificationPage(),
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),
                 ),
               ),
-              SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.75,
-                      child: TextField(
-                        decoration: InputDecoration(
-                          labelText: 'Search for your destination',
-                          labelStyle: GoogleFonts.poppins(
-                            fontSize: 16,
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.12,
-                      child: MaterialButton(
-                        onPressed: () {},
-                        child: Icon(
-                          Icons.search,
-                          color: Colors.white,
-                          size: 24,
-                        ),
-                        color: Colors.indigo,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        height: 50,
-                        minWidth: double.infinity,
-                        padding: EdgeInsets.zero,
-                      ),
-                    )
-                  ],
-                ),
-              ),
+              // SizedBox(
+              //   height: 20,
+              // ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 20),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       Container(
+              //         width: MediaQuery.of(context).size.width * 0.75,
+              //         child: TextField(
+              //           decoration: InputDecoration(
+              //             labelText: 'Search for your destination',
+              //             labelStyle: GoogleFonts.poppins(
+              //               fontSize: 16,
+              //             ),
+              //             border: OutlineInputBorder(
+              //               borderRadius: BorderRadius.circular(30),
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //       Container(
+              //         width: MediaQuery.of(context).size.width * 0.12,
+              //         child: MaterialButton(
+              //           onPressed: () {},
+              //           child: Icon(
+              //             Icons.search,
+              //             color: Colors.white,
+              //             size: 24,
+              //           ),
+              //           color: Colors.indigo,
+              //           shape: RoundedRectangleBorder(
+              //             borderRadius: BorderRadius.circular(30),
+              //           ),
+              //           height: 50,
+              //           minWidth: double.infinity,
+              //           padding: EdgeInsets.zero,
+              //         ),
+              //       )
+              //     ],
+              //   ),
+              // ),
               SizedBox(
                 height: 24,
               ),
@@ -253,7 +261,7 @@ class _BerandaState extends State<Beranda> {
               Padding(
                 padding: EdgeInsets.only(left: 20, right: 20),
                 child: Container(
-                  height: 400,
+                  height: 430,
                   width: double.infinity,
                   child: GestureDetector(
                     onTap: () {

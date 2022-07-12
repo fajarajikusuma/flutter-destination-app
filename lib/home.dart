@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:destination_app/beranda.dart';
+import 'package:destination_app/search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -22,34 +23,14 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  SearchBar searchBar;
-
-  AppBar buildAppBar(BuildContext context) {
-    return new AppBar(
-        title: new Text('Beranda'),
-        actions: [searchBar.getSearchAction(context)]);
-  }
-
-  _HomePageState() {
-    searchBar = new SearchBar(
-        inBar: false,
-        setState: setState,
-        onSubmitted: print,
-        buildDefaultAppBar: buildAppBar);
-  }
-
   static const List<Widget> _pages = <Widget>[
-    // DestinationsPage(),
-    // SearchPage(),
-    // AddPage(),
-    LoginPage(),
+    SearchPage(),
     Beranda(),
     LoginPage(),
   ];
 
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: searchBar.build(context),
       bottomNavigationBar: Container(
         color: Colors.white,
         child: Padding(
