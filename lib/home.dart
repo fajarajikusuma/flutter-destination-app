@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:destination_app/beranda.dart';
 import 'package:destination_app/search.dart';
+import 'package:destination_app/userLoginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -15,7 +16,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
-  int _selectedIndex = 1;
+  int _selectedIndex = 2;
 
   void _onInputTapped(int index) {
     setState(() {

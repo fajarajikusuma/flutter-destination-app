@@ -1,3 +1,4 @@
+import 'package:destination_app/userLoginPage.dart';
 import 'package:flutter/material.dart';
 import 'main.dart';
 import 'register.dart';
@@ -158,7 +159,12 @@ class _LoginPageState extends State<LoginPage> {
                           height: double.infinity,
                           // post data to server
                           onPressed: () {
-                            loginUser();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => userPage(),
+                              ),
+                            );
                           },
                           child: Text(
                             'Login',
