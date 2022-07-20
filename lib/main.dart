@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'home.dart';
+import 'login.dart';
 import 'package:statusbarz/statusbarz.dart';
+import 'package:get_storage/get_storage.dart';
 
-void main() {
+void main() async {
+  await GetStorage.init();
   runApp(Main());
 }
 
@@ -112,10 +115,17 @@ class MyHomePage extends StatelessWidget {
                           Expanded(
                             child: MaterialButton(
                               onPressed: () {
+                                var isLoggedIn = GetStorage().read('username');
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => HomePage(),
+                                    builder: (context) {
+                                      if (isLoggedIn != null) {
+                                        return HomePage(selected: 1);
+                                      } else {
+                                        return LoginPage();
+                                      }
+                                    }
                                   ),
                                 );
                               },

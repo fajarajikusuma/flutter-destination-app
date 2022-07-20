@@ -1,7 +1,10 @@
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'home.dart';
 
 class userPage extends StatefulWidget {
   const userPage({Key key}) : super(key: key);
@@ -11,6 +14,8 @@ class userPage extends StatefulWidget {
 }
 
 class _userPageState extends State<userPage> {
+  final String username = GetStorage().read('username');
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +81,7 @@ class _userPageState extends State<userPage> {
                                     Padding(
                                       padding: EdgeInsets.only(left: 90),
                                       child: Text(
-                                        "Hi! Dimas Adi",
+                                        "${username}",
                                         style: GoogleFonts.poppins(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w500,
@@ -396,7 +401,16 @@ class _userPageState extends State<userPage> {
                                   ],
                                 ),
                                 child: MaterialButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    GetStorage().remove('username');
+                                    // redirect to login page
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => HomePage(selected: 2),
+                                      ),
+                                    );
+                                  },
                                   child: Text(
                                     'Logout',
                                     style: GoogleFonts.poppins(
