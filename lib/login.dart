@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:destination_app/beranda.dart';
 import 'package:destination_app/userLoginPage.dart';
 import 'package:flutter/material.dart';
@@ -19,17 +21,20 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController _passwordController = TextEditingController();
   void loginUser() {
     // send post request to server and save response in variable
-    var url = Uri.parse('http://192.168.79.117:5000/auth/login');
+    var url = Uri.parse('http://192.168.79.104:5001/auth/login');
     var body = {
       'username': _usernameController.text,
       'password': _passwordController.text,
     };
-    http.post(url, body: body).then((response) {
+    http.post(url, body: body).then((response) async  {
       print(response.body);
       // check if auth property in response body is true
       if (!response.body.contains('true')) {
         // set username in get storage
         GetStorage().write('username', _usernameController.text);
+        // parse response body to json
+        var jsonResponse = await json.decode(response.body);
+        GetStorage().write('user_id', jsonResponse['id']);
         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomePage(selected: 1)), (route) => false);
       } else {
         // show error message

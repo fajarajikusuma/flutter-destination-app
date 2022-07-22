@@ -19,7 +19,7 @@ class popularPage extends StatefulWidget {
 class _popularPageState extends State<popularPage> {
   Future<List> getData() async {
     final response =
-        await http.get(Uri.parse("http://192.168.79.117:5000/destinations"));
+        await http.get(Uri.parse("http://192.168.79.104:5001/destinations"));
     Map<String, dynamic> data = json.decode(response.body);
     return data['data'];
   }

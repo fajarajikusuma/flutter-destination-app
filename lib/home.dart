@@ -5,8 +5,8 @@ import 'package:destination_app/userLoginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'login.dart';
 import 'package:get_storage/get_storage.dart';
+import 'login.dart';
 
 class HomePage extends StatefulWidget {
   // add selected as class argument

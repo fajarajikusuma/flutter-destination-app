@@ -20,7 +20,7 @@ class _SearchPageState extends State<SearchPage> {
   List<Widget> _list = [];
 
   void searchData (){
-    var url = Uri.parse("http://192.168.79.117:5000/destinations/name/" +
+    var url = Uri.parse("http://192.168.79.104:5001/destinations/name/" +
         _searchController.text);
     http.get(url).then((response) {
       Map<String, dynamic> data = json.decode(response.body);
