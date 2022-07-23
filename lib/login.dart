@@ -1,8 +1,13 @@
-import 'package:destination_app/home.dart';
+import 'dart:convert';
+
+import 'package:destination_app/beranda.dart';
+
 import 'package:destination_app/userLoginPage.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'main.dart';
 import 'register.dart';
+import 'home.dart';
 import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
@@ -17,21 +22,24 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController _passwordController = TextEditingController();
   void loginUser() {
     // send post request to server and save response in variable
-    var url = Uri.parse('http://54.169.198.245:5050/auth/login');
+    var url = Uri.parse('http://192.168.90.112:5001/auth/login');
     var body = {
       'username': _usernameController.text,
       'password': _passwordController.text,
     };
-    http.post(url, body: body).then((response) {
+    http.post(url, body: body).then((response) async {
       print(response.body);
       // check if auth property in response body is true
-      if (response.body.contains('true')) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MyApp(),
-          ),
-        );
+      if (!response.body.contains('true')) {
+        // set username in get storage
+        GetStorage().write('username', _usernameController.text);
+        // parse response body to json
+        var jsonResponse = await json.decode(response.body);
+        GetStorage().write('user_id', jsonResponse['id']);
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => HomePage(selected: 1)),
+            (route) => false);
       } else {
         // show error message
         showDialog(
@@ -145,6 +153,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                     ),
+
                     SizedBox(
                       height: 20,
                     ),
@@ -164,12 +173,7 @@ class _LoginPageState extends State<LoginPage> {
                             height: double.infinity,
                             // post data to server
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => HomePage(),
-                                ),
-                              );
+                              loginUser();
                             },
                             child: Text(
                               'Login',
@@ -182,44 +186,43 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Text(
-                          'Don\'t have an account?',
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
-                        ),
-                        Container(
-                          child: FlatButton(
-                            child: Text(
-                              'Register',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.indigo,
-                              ),
-                            ),
-                            onPressed: () {
-                              Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => RegisterPage()),
-                                (Route<dynamic> route) => false,
-                              );
-                            },
-                          ),
-                        )
-                      ],
-                    ),
                   ],
                 ),
               ),
             ),
             //
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  'Don\'t have an account?',
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+                Container(
+                  child: FlatButton(
+                    child: Text(
+                      'Register',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.indigo,
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => RegisterPage()),
+                        (Route<dynamic> route) => false,
+                      );
+                    },
+                  ),
+                )
+              ],
+            ),
             Padding(
               padding: const EdgeInsets.only(
                   left: 40, right: 40, top: 10, bottom: 10),

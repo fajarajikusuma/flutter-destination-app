@@ -3,15 +3,20 @@ import 'package:destination_app/notification.dart';
 import 'package:destination_app/popularPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
+import 'package:get_storage/get_storage.dart';
 import 'detailItem.dart';
 import 'package:google_fonts/google_fonts.dart';
+// import http
+import 'package:http/http.dart' as http;
+// import json
+import 'dart:convert';
 
 class CardItem {
   final String title;
   final String price;
-  final String imageUrl;
+  final String img_path;
 
-  CardItem({this.title, this.price, this.imageUrl});
+  CardItem({this.title, this.price, this.img_path});
 }
 
 class Beranda extends StatefulWidget {
@@ -22,71 +27,57 @@ class Beranda extends StatefulWidget {
 }
 
 class _BerandaState extends State<Beranda> {
-  List<CardItem> items = [
-    CardItem(
-      title: 'Bali',
-      price: 'Rp. 1.000.000',
-      imageUrl: 'assets/img/1.jpg',
-    ),
-    CardItem(
-      title: 'Lombok',
-      price: 'Rp. 1.500.000',
-      imageUrl: 'assets/img/2.jpeg',
-    ),
-    CardItem(
-      title: 'Bromo',
-      price: 'Rp. 700.000',
-      imageUrl: 'assets/img/3.jpg',
-    ),
-    CardItem(
-      title: 'Jogja',
-      price: 'Rp. 400.000',
-      imageUrl: 'assets/img/4.jpg',
-    ),
-  ];
+  final String LoggedIn = GetStorage().read('username');
+  Future<List> getData() async {
+    final response =
+        await http.get(Uri.parse("http://192.168.90.112:5001/destinations"));
+    Map<String, dynamic> data = json.decode(response.body);
+    return data['data'];
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget card({
       CardItem item,
     }) =>
-        Container(
-          height: 200,
-          width: 200,
-          child: Column(
-            children: [
-              Expanded(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Material(
-                    child: Ink.image(
-                      image: AssetImage(item.imageUrl),
-                      fit: BoxFit.cover,
-                      child: InkWell(
-                        onTap: () {},
+        Padding(
+          padding: const EdgeInsets.only(right: 3.0, left: 3.0),
+          child: Container(
+            height: 200,
+            width: 200,
+            child: Column(
+              children: [
+                Expanded(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Material(
+                      child: Image(
+                        image: AssetImage(item.img_path),
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 4,
-              ),
-              Text(
-                item.title,
-                style: GoogleFonts.poppins(
-                    fontSize: 18, fontWeight: FontWeight.w600),
-              ),
-              Text(item.price,
+                SizedBox(
+                  height: 4,
+                ),
+                Text(
+                  item.title,
                   style: GoogleFonts.poppins(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.indigo)),
-            ],
+                      fontSize: 18, fontWeight: FontWeight.w600),
+                ),
+                Text(item.price,
+                    style: GoogleFonts.poppins(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.indigo)),
+              ],
+            ),
           ),
         );
     return Scaffold(
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        // physics: BouncingScrollPhysics(),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -110,7 +101,9 @@ class _BerandaState extends State<Beranda> {
                             Padding(
                               padding: EdgeInsets.only(right: 10, left: 10),
                               child: Text(
-                                "Hi! Dimas Adi",
+                                LoggedIn != null
+                                    ? 'Hello, ' + LoggedIn
+                                    : 'Anda belum login',
                                 style: GoogleFonts.poppins(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
@@ -141,49 +134,6 @@ class _BerandaState extends State<Beranda> {
                   ),
                 ),
               ),
-              // SizedBox(
-              //   height: 20,
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 20),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //     children: [
-              //       Container(
-              //         width: MediaQuery.of(context).size.width * 0.75,
-              //         child: TextField(
-              //           decoration: InputDecoration(
-              //             labelText: 'Search for your destination',
-              //             labelStyle: GoogleFonts.poppins(
-              //               fontSize: 16,
-              //             ),
-              //             border: OutlineInputBorder(
-              //               borderRadius: BorderRadius.circular(30),
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //       Container(
-              //         width: MediaQuery.of(context).size.width * 0.12,
-              //         child: MaterialButton(
-              //           onPressed: () {},
-              //           child: Icon(
-              //             Icons.search,
-              //             color: Colors.white,
-              //             size: 24,
-              //           ),
-              //           color: Colors.indigo,
-              //           shape: RoundedRectangleBorder(
-              //             borderRadius: BorderRadius.circular(30),
-              //           ),
-              //           height: 50,
-              //           minWidth: double.infinity,
-              //           padding: EdgeInsets.zero,
-              //         ),
-              //       )
-              //     ],
-              //   ),
-              // ),
               SizedBox(
                 height: 24,
               ),
@@ -212,15 +162,72 @@ class _BerandaState extends State<Beranda> {
                 padding: EdgeInsets.only(left: 20, right: 20),
                 child: Container(
                   height: 200,
-                  child: ListView.separated(
-                    physics: BouncingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: items.length,
-                    separatorBuilder: (context, index) => SizedBox(
-                      width: 16,
-                    ),
-                    itemBuilder: (context, index) {
-                      return card(item: items[index]);
+                  // create child listview separated, showing data from getData()
+                  child: FutureBuilder<List>(
+                    future: getData(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else if (snapshot.hasData) {
+                        return ListView.builder(
+                          physics: BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (context, index) {
+                            // check if data['isPromo'] === 1
+                            if (snapshot.data[index]['isPromo'] == 1) {
+                              // return GestureDetector(
+                              //   onTap: () {
+                              //     Navigator.push(
+                              //       context,
+                              //       MaterialPageRoute(
+                              //         builder: (context) => DetailItem(
+                              //             destination_id:
+                              //                 // convert to int
+                              //                 snapshot.data[index]['id']),
+                              //       ),
+                              //     );
+                              //   },
+                              //   child: card(
+                              //     item: CardItem(
+                              //       title: snapshot.data[index]['title'],
+                              //       // convert to string
+                              //       price: '\$${snapshot.data[index]['price']}',
+                              //       img_path: snapshot.data[index]['img_path'],
+                              //     ),
+                              //   ),
+                              // );
+                              return InkWell(
+                                child: card(
+                                  item: CardItem(
+                                    title: snapshot.data[index]['title'],
+                                    // convert to string
+                                    price: '\$${snapshot.data[index]['price']}',
+                                    img_path: snapshot.data[index]['img_path'],
+                                  ),
+                                ),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => DetailItem(
+                                          destination_id:
+                                              // convert to int
+                                              snapshot.data[index]['id']),
+                                    ),
+                                  );
+                                },
+                              );
+                            } else {
+                              return Container();
+                            }
+                          },
+                        );
+                      } else {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
                     },
                   ),
                 ),
@@ -269,247 +276,153 @@ class _BerandaState extends State<Beranda> {
               Padding(
                 padding: EdgeInsets.only(left: 20, right: 20),
                 child: Container(
-                  height: 430,
+                  height: 444,
                   width: double.infinity,
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => DetailItem()));
+                  child: FutureBuilder(
+                    future: getData(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else if (snapshot.hasData) {
+                        return ListView.builder(
+                          physics: BouncingScrollPhysics(),
+                          scrollDirection: Axis.vertical,
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (context, index) {
+                            if (snapshot.data[index]['rating'] != 5) {
+                              return Container();
+                            }
+                            // return GestureDetector(
+                            // onTap: () {
+                            //   Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //       builder: (context) => DetailItem(
+                            //         destination_id: snapshot.data[index]
+                            //             ['id'],
+                            //       ),
+                            //     ),
+                            //   );
+                            // },
+                            //   child: card(
+                            //     item: CardItem(
+                            //       title: snapshot.data[index]['title'],
+                            //       price: 'Rp. ${snapshot.data[index]['price']}',
+                            //       img_path: snapshot.data[index]['img_path'],
+                            //     ),
+                            //   ),
+                            // );
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => DetailItem(
+                                      destination_id: snapshot.data[index]
+                                          ['id'],
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      height: 120,
+                                      child: Column(
+                                        children: [
+                                          Expanded(
+                                            child: Card(
+                                              elevation: 2,
+                                              shadowColor: Colors.black,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              child: Row(
+                                                children: [
+                                                  Container(
+                                                    width: 180,
+                                                    height: 120,
+                                                    // child: Expanded(
+                                                    child: ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      child: Material(
+                                                        child: Image(
+                                                            image: AssetImage(
+                                                                snapshot.data[
+                                                                        index][
+                                                                    'img_path']),
+                                                            fit: BoxFit.cover),
+                                                      ),
+                                                    ),
+                                                    // ),
+                                                  ),
+                                                  Container(
+                                                    margin: EdgeInsets.only(
+                                                        left: 10),
+                                                    width: 190,
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          '${snapshot.data[index]['title']}',
+                                                          style: GoogleFonts
+                                                              .poppins(
+                                                            fontSize: 18,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          '${snapshot.data[index]['description'].toString().length > 80 ? '${snapshot.data[index]['description'].substring(0, 80)}...' : snapshot.data[index]['description']}',
+                                                          style: GoogleFonts
+                                                              .poppins(
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          '\$${snapshot.data[index]['price']}',
+                                                          style: GoogleFonts
+                                                              .poppins(
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            color:
+                                                                Colors.indigo,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      } else {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
                     },
-                    child: Container(
-                      child: ListView(
-                        physics: BouncingScrollPhysics(),
-                        children: [
-                          Container(
-                            height: 120,
-                            child: Column(
-                              children: [
-                                Expanded(
-                                  child: Card(
-                                    elevation: 2,
-                                    shadowColor: Colors.black,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            child: Material(
-                                              child: Ink.image(
-                                                image: AssetImage(
-                                                    'assets/img/1.jpg'),
-                                                fit: BoxFit.cover,
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                DetailItem()));
-                                                  },
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          margin: EdgeInsets.only(left: 10),
-                                          width: 200,
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'Bali',
-                                                style: GoogleFonts.poppins(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
-                                              Text(
-                                                'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                                                style: GoogleFonts.poppins(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                              Text(
-                                                'Rp. 1.000.000',
-                                                style: GoogleFonts.poppins(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.indigo,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 4,
-                          ),
-                          Container(
-                            height: 120,
-                            child: Column(
-                              children: [
-                                Expanded(
-                                  child: Card(
-                                    elevation: 2,
-                                    shadowColor: Colors.black,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            child: Material(
-                                              child: Ink.image(
-                                                image: AssetImage(
-                                                    'assets/img/1.jpg'),
-                                                fit: BoxFit.cover,
-                                                child: InkWell(
-                                                  onTap: () {},
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          margin: EdgeInsets.only(left: 10),
-                                          width: 200,
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'Bali',
-                                                style: GoogleFonts.poppins(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
-                                              Text(
-                                                'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                                                style: GoogleFonts.poppins(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                              Text(
-                                                'Rp. 1.000.000',
-                                                style: GoogleFonts.poppins(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.indigo,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 4,
-                          ),
-                          Container(
-                            height: 120,
-                            child: Column(
-                              children: [
-                                Expanded(
-                                  child: Card(
-                                    elevation: 2,
-                                    shadowColor: Colors.black,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            child: Material(
-                                              child: Ink.image(
-                                                image: AssetImage(
-                                                    'assets/img/1.jpg'),
-                                                fit: BoxFit.cover,
-                                                child: InkWell(
-                                                  onTap: () {},
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          margin: EdgeInsets.only(left: 10),
-                                          width: 200,
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'Bali',
-                                                style: GoogleFonts.poppins(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
-                                              Text(
-                                                'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                                                style: GoogleFonts.poppins(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                              Text(
-                                                'Rp. 1.000.000',
-                                                style: GoogleFonts.poppins(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.indigo,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 40,
-                          ),
-                        ],
-                      ),
-                    ),
                   ),
                 ),
               ),

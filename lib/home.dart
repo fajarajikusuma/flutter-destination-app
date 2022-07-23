@@ -5,18 +5,33 @@ import 'package:destination_app/userLoginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:get_storage/get_storage.dart';
 import 'login.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key key}) : super(key: key);
+  // add selected as class argument
+  final int selected;
+  HomePage({Key key, this.selected}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  int _selectedIndex = 0;
+
   @override
-  int _selectedIndex = 1;
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.selected;
+    // add new index to _pages based on GetStorage
+    var LoggedIn = GetStorage().read('username');
+    if (LoggedIn != null) {
+      _pages.add(userPage());
+    } else {
+      _pages.add(LoginPage());
+    }
+  }
 
   void _onInputTapped(int index) {
     setState(() {
@@ -24,11 +39,11 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  static const List<Widget> _pages = <Widget>[
+  // set state to add new index at _pages
+
+  List<Widget> _pages = [
     SearchPage(),
     Beranda(),
-    // LoginPage(),
-    userPage(),
   ];
 
   Widget build(BuildContext context) {

@@ -3,6 +3,10 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'detailItem.dart';
+// import async and convert
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'dart:async';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key key}) : super(key: key);
@@ -12,6 +16,95 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+  TextEditingController _searchController = TextEditingController();
+  List<Widget> _list = [];
+
+  void searchData() {
+    var url = Uri.parse("http://192.168.90.112:5001/destinations/name/" +
+        _searchController.text);
+    http.get(url).then((response) {
+      Map<String, dynamic> data = json.decode(response.body);
+      setState(() {
+        _list = [];
+        for (var i = 0; i < data['data'].length; i++) {
+          _list.add(SingleChildScrollView(
+            child: Container(
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DetailItem(
+                        destination_id: data['data'][i]['id'],
+                      ),
+                    ),
+                  );
+                },
+                child: Card(
+                  child: Column(
+                    // mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          // margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+                          height: 200,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              image: DecorationImage(
+                                image: AssetImage(data['data'][i]['img_path']),
+                                fit: BoxFit.cover,
+                              )),
+                          // child: Column(
+                          //   mainAxisAlignment: MainAxisAlignment.center,
+                          //   children: <Widget>[],
+                          // ),
+                        ),
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(left: 9, top: 5, bottom: 5),
+                        child: Text(
+                          data['data'][i]['title'],
+                          style: GoogleFonts.poppins(
+                            fontSize: 26,
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.indigo,
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                      Container(
+                        margin:
+                            EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                        child: Text(
+                          // show description but limit to 100 characters
+                          data['data'][i]['description'].toString().length > 100
+                              ? data['data'][i]['description']
+                                      .toString()
+                                      .substring(0, 100) +
+                                  "..."
+                              : data['data'][i]['description'].toString(),
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ));
+        }
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,6 +144,7 @@ class _SearchPageState extends State<SearchPage> {
                   Container(
                     width: MediaQuery.of(context).size.width * 0.75,
                     child: TextField(
+                      controller: _searchController,
                       decoration: InputDecoration(
                         labelText: 'Search for your destination',
                         labelStyle: GoogleFonts.poppins(
@@ -65,7 +159,9 @@ class _SearchPageState extends State<SearchPage> {
                   Container(
                     width: MediaQuery.of(context).size.width * 0.12,
                     child: MaterialButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        searchData();
+                      },
                       child: Icon(
                         Icons.search,
                         color: Colors.white,
@@ -87,9 +183,9 @@ class _SearchPageState extends State<SearchPage> {
               height: 20,
             ),
             Padding(
-              padding: EdgeInsets.only(left: 20, right: 20),
+              padding: EdgeInsets.only(left: 10, right: 10),
               child: Container(
-                height: 680,
+                height: 694,
                 width: double.infinity,
                 child: GestureDetector(
                   onTap: () {
@@ -97,232 +193,10 @@ class _SearchPageState extends State<SearchPage> {
                         MaterialPageRoute(builder: (context) => DetailItem()));
                   },
                   child: Container(
-                    child: ListView(
-                      scrollDirection: Axis.vertical,
-                      physics: BouncingScrollPhysics(),
-                      children: [
-                        Container(
-                          height: 120,
-                          child: Column(
-                            children: [
-                              Expanded(
-                                child: Card(
-                                  elevation: 2,
-                                  shadowColor: Colors.black,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          child: Material(
-                                            child: Ink.image(
-                                              image: AssetImage(
-                                                  'assets/img/1.jpg'),
-                                              fit: BoxFit.cover,
-                                              child: InkWell(
-                                                onTap: () {},
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(left: 10),
-                                        width: 200,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Bali',
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-                                            Text(
-                                              'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                            Text(
-                                              'Rp. 1.000.000',
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.indigo,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 4,
-                        ),
-                        Container(
-                          height: 120,
-                          child: Column(
-                            children: [
-                              Expanded(
-                                child: Card(
-                                  elevation: 2,
-                                  shadowColor: Colors.black,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          child: Material(
-                                            child: Ink.image(
-                                              image: AssetImage(
-                                                  'assets/img/1.jpg'),
-                                              fit: BoxFit.cover,
-                                              child: InkWell(
-                                                onTap: () {},
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(left: 10),
-                                        width: 200,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Bali',
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-                                            Text(
-                                              'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                            Text(
-                                              'Rp. 1.000.000',
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.indigo,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 4,
-                        ),
-                        Container(
-                          height: 120,
-                          child: Column(
-                            children: [
-                              Expanded(
-                                child: Card(
-                                  elevation: 2,
-                                  shadowColor: Colors.black,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          child: Material(
-                                            child: Ink.image(
-                                              image: AssetImage(
-                                                  'assets/img/1.jpg'),
-                                              fit: BoxFit.cover,
-                                              child: InkWell(
-                                                onTap: () {},
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(left: 10),
-                                        width: 200,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Bali',
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-                                            Text(
-                                              'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                            Text(
-                                              'Rp. 1.000.000',
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.indigo,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 40,
-                        ),
-                      ],
-                    ),
-                  ),
+                      child: ListView(
+                    physics: BouncingScrollPhysics(),
+                    children: _list,
+                  )),
                 ),
               ),
             ),
