@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController _passwordController = TextEditingController();
   void loginUser() {
     // send post request to server and save response in variable
-    var url = Uri.parse('http://192.168.79.104:5001/auth/login');
+    var url = Uri.parse('http://192.168.90.112:5001/auth/login');
     var body = {
       'username': _usernameController.text,
       'password': _passwordController.text,

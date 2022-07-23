@@ -20,7 +20,7 @@ class _DetailItemState extends State<DetailItem> {
   int numOfItems = 1;
   Future<List> getData() async {
     final response = await http.get(Uri.parse(
-        "http://192.168.79.104:5001/destinations/id/${widget.destination_id}"));
+        "http://192.168.90.112:5001/destinations/id/${widget.destination_id}"));
     Map<String, dynamic> data = json.decode(response.body);
     return data['data'];
   }
@@ -29,37 +29,15 @@ class _DetailItemState extends State<DetailItem> {
     var data = await getData();
     var total = data[0]['price'] * numOfItems;
     final response = await http
-        .post(Uri.parse("http://192.168.79.104:5001/transactions"), body: {
+        .post(Uri.parse("http://192.168.90.112:5001/transactions"), body: {
       'userId': user_id.toString(),
       'destinationId': destination_id.toString(),
       'quantity': numOfItems.toString(),
       'total': total.toString()
     });
-    // show dialog transaction success
-    // showDialog(
-    //     context: context,
-    //     builder: (BuildContext context) {
-    //       return AlertDialog(
-    //         title: Text("Transaction Success"),
-    //         content: Text("Your transaction has been success"),
-    //         actions: <Widget>[
-    //           FlatButton(
-    //             child: Text("OK"),
-    //             onPressed: () {
-    //               // return to home page
-    //               Navigator.push(
-    //                   context,
-    //                   MaterialPageRoute(
-    //                       builder: (context) => HomePage(selected: 1,)));
-    //             },
-    //           )
-    //         ],
-    //       );
-    //     });
-    // return to home page
-    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-        builder: (context) => HomePage(selected: 1,)), (route) => false);
-
+    // redirect to home page
+    // Navigator.push(
+    //     context, MaterialPageRoute(builder: (context) => HomePage(selected: 1)));
   }
 
   Widget build(BuildContext context) {
@@ -333,6 +311,10 @@ class _DetailItemState extends State<DetailItem> {
                                                                           widget
                                                                               .destination_id,
                                                                           numOfItems);
+                                                                      Navigator.push(
+                                                                          context,
+                                                                          MaterialPageRoute(
+                                                                              builder: (context) => HomePage(selected: 1)));
                                                                     },
                                                                   ),
                                                                 ],

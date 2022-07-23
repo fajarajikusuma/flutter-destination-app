@@ -30,33 +30,11 @@ class _BerandaState extends State<Beranda> {
   final String LoggedIn = GetStorage().read('username');
   Future<List> getData() async {
     final response =
-        await http.get(Uri.parse("http://192.168.79.104:5001/destinations"));
+        await http.get(Uri.parse("http://192.168.90.112:5001/destinations"));
     Map<String, dynamic> data = json.decode(response.body);
     return data['data'];
   }
 
-  List<CardItem> items = [
-    CardItem(
-      title: 'Bali',
-      price: 'Rp. 1.000.000',
-      img_path: 'assets/img/1.jpg',
-    ),
-    CardItem(
-      title: 'Lombok',
-      price: 'Rp. 1.500.000',
-      img_path: 'assets/img/2.jpeg',
-    ),
-    CardItem(
-      title: 'Bromo',
-      price: 'Rp. 700.000',
-      img_path: 'assets/img/3.jpg',
-    ),
-    CardItem(
-      title: 'Jogja',
-      price: 'Rp. 400.000',
-      img_path: 'assets/img/4.jpg',
-    ),
-  ];
   @override
   Widget build(BuildContext context) {
     Widget card({

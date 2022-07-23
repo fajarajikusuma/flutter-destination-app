@@ -3,6 +3,9 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+// import async and convert
+import 'dart:convert';
 
 import 'home.dart';
 
@@ -16,9 +19,13 @@ class userPage extends StatefulWidget {
 class _userPageState extends State<userPage> {
   final String username = GetStorage().read('username');
 
-  // Future<List> getData() async {
-  //   final response =
-  //       await http.get(Uri.parse("http://192.168.79.104:5001/transaction
+  Future<List> getData() async {
+    var user_id = GetStorage().read('user_id');
+    final response = await http
+        .get(Uri.parse("http://192.168.90.112:5001/transactions/user/$user_id"));
+    var responseJson = json.decode(response.body);
+    return responseJson['data'];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -136,247 +143,111 @@ class _userPageState extends State<userPage> {
                                   physics: BouncingScrollPhysics(),
                                   children: [
                                     Container(
-                                      height: 70,
+                                      height: 400,
                                       child: Card(
                                         elevation: 2,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              width: 80,
-                                              child: Icon(
-                                                Icons.check,
-                                                color: Colors.indigo,
-                                              ),
-                                            ),
-                                            Container(
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    'Rp. 100.000',
-                                                    style: GoogleFonts.poppins(
-                                                      fontSize: 20,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color: Colors.indigo,
+                                        child: FutureBuilder(
+                                          future: getData(),
+                                          builder: (BuildContext context,
+                                              AsyncSnapshot snapshot) {
+                                                // do something when snapshot return empty array
+
+                                                if (snapshot.data == null) {
+                                                  return Center(
+                                                    child: Text(
+                                                      "You have no purchases yet",
+                                                      style: GoogleFonts.poppins(
+                                                        fontSize: 20,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color: Colors.indigo,
+                                                      ),
                                                     ),
-                                                  ),
-                                                  Text(
-                                                    'Purchased on: 12/12/2020',
-                                                    style: GoogleFonts.poppins(
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color: Colors.indigo,
+                                                  );
+                                                }
+                                            if (snapshot.hasData) {
+                                              return ListView.builder(
+                                                itemCount: snapshot.data.length,
+                                                itemBuilder:
+                                                    (BuildContext context,
+                                                        int index) {
+                                                  return Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Container(
+                                                        width: 80,
+                                                        child: Icon(
+                                                          Icons.check,
+                                                          color: Colors.indigo,
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                              "${snapshot.data[
+                                                                      index]
+                                                                  ['title']} (${snapshot.data[
+                                                                      index]
+                                                                  ['quantity']} Tiket)",
+                                                              style: GoogleFonts
+                                                                  .poppins(
+                                                                fontSize: 20,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                color: Colors
+                                                                    .indigo,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              "\$${snapshot.data[
+                                                                      index]
+                                                                  ['total'].toString()}",
+                                                              style: GoogleFonts
+                                                                  .poppins(
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                color: Colors
+                                                                    .indigo,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              );
+                                            } else {
+                                              return Center(
+                                                child:
+                                                    // Text ('No Data'),
+                                                    Text(
+                                                      'You have no purchase history',
+                                                      style: GoogleFonts
+                                                          .poppins(
+                                                        fontSize: 20,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color: Colors.indigo,
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      height: 70,
-                                      child: Card(
-                                        elevation: 2,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              width: 80,
-                                              child: Icon(
-                                                Icons.check,
-                                                color: Colors.indigo,
-                                              ),
-                                            ),
-                                            Container(
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    'Rp. 100.000',
-                                                    style: GoogleFonts.poppins(
-                                                      fontSize: 20,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color: Colors.indigo,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    'Purchased on: 12/12/2020',
-                                                    style: GoogleFonts.poppins(
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color: Colors.indigo,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      height: 70,
-                                      child: Card(
-                                        elevation: 2,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              width: 80,
-                                              child: Icon(
-                                                Icons.check,
-                                                color: Colors.indigo,
-                                              ),
-                                            ),
-                                            Container(
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    'Rp. 100.000',
-                                                    style: GoogleFonts.poppins(
-                                                      fontSize: 20,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color: Colors.indigo,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    'Purchased on: 12/12/2020',
-                                                    style: GoogleFonts.poppins(
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color: Colors.indigo,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      height: 70,
-                                      child: Card(
-                                        elevation: 2,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              width: 80,
-                                              child: Icon(
-                                                Icons.check,
-                                                color: Colors.indigo,
-                                              ),
-                                            ),
-                                            Container(
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    'Rp. 100.000',
-                                                    style: GoogleFonts.poppins(
-                                                      fontSize: 20,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color: Colors.indigo,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    'Purchased on: 12/12/2020',
-                                                    style: GoogleFonts.poppins(
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color: Colors.indigo,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      height: 70,
-                                      child: Card(
-                                        elevation: 2,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              width: 80,
-                                              child: Icon(
-                                                Icons.check,
-                                                color: Colors.indigo,
-                                              ),
-                                            ),
-                                            Container(
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    'Rp. 100.000',
-                                                    style: GoogleFonts.poppins(
-                                                      fontSize: 20,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color: Colors.indigo,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    'Purchased on: 12/12/2020',
-                                                    style: GoogleFonts.poppins(
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color: Colors.indigo,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
+                                              );
+                                            }
+                                          },
                                         ),
                                       ),
                                     ),
@@ -411,7 +282,8 @@ class _userPageState extends State<userPage> {
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => HomePage(selected: 2),
+                                        builder: (context) =>
+                                            HomePage(selected: 2),
                                       ),
                                     );
                                   },
