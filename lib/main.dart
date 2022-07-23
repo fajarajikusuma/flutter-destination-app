@@ -1,3 +1,4 @@
+import 'package:destination_app/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -115,7 +116,7 @@ class MyHomePage extends StatelessWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => HomePage(),
+                                    builder: (context) => LoginPage(),
                                   ),
                                 );
                               },

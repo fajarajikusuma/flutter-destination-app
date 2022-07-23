@@ -1,3 +1,4 @@
+import 'package:destination_app/home.dart';
 import 'package:destination_app/userLoginPage.dart';
 import 'package:flutter/material.dart';
 import 'main.dart';
@@ -57,38 +58,200 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
-            child: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'Mangkat',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
+        body: SingleChildScrollView(
+      child: SafeArea(
+          child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 150,
             ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            'Welcome back!',
-            style: TextStyle(
-              fontSize: 20,
+            Text(
+              'Mangkat',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          SizedBox(
-            height: 40,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Container(
-              width: double.infinity,
-              height: 300,
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              'Welcome back!',
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            ),
+            SizedBox(
+              height: 40,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Container(
+                width: double.infinity,
+                height: 300,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      offset: Offset(0, 10),
+                      blurRadius: 20,
+                      color: Colors.black12,
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
+                      child: Container(
+                        child: TextField(
+                          controller: _usernameController,
+                          decoration: InputDecoration(
+                            labelText: 'Username',
+                            labelStyle: TextStyle(
+                              fontSize: 18,
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
+                      child: Container(
+                        child: TextField(
+                          controller: _passwordController,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            labelText: 'Password',
+                            labelStyle: TextStyle(
+                              fontSize: 18,
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    // make button with rounded corners
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
+                      child: Container(
+                        width: 150,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          color: Colors.indigo,
+                        ),
+                        child: Center(
+                          child: MaterialButton(
+                            minWidth: double.infinity,
+                            height: double.infinity,
+                            // post data to server
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => HomePage(),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              'Login',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          'Don\'t have an account?',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                        Container(
+                          child: FlatButton(
+                            child: Text(
+                              'Register',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.indigo,
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => RegisterPage()),
+                                (Route<dynamic> route) => false,
+                              );
+                            },
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            //
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 40, right: 40, top: 10, bottom: 10),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Divider(
+                      color: Colors.black,
+                      height: 10,
+                    ),
+                  ),
+                  Text(
+                    '    Atau    ',
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                  Expanded(
+                    child: Divider(
+                      color: Colors.black,
+                      height: 10,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              height: 60,
+              margin: EdgeInsets.only(left: 15, right: 15, top: 10),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
                 color: Colors.white,
+                borderRadius: BorderRadius.circular(30),
                 boxShadow: [
                   BoxShadow(
                     offset: Offset(0, 10),
@@ -97,192 +260,38 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ],
               ),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25),
-                    child: Container(
-                      child: TextField(
-                        controller: _usernameController,
-                        decoration: InputDecoration(
-                          labelText: 'Username',
-                          labelStyle: TextStyle(
-                            fontSize: 18,
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                        ),
+              child: MaterialButton(
+                minWidth: double.infinity,
+                height: 50,
+                onPressed: () {},
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image(
+                      image: AssetImage(
+                        'assets/img/google_logo.png',
                       ),
+                      width: 30,
+                      height: 30,
                     ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25),
-                    child: Container(
-                      child: TextField(
-                        controller: _passwordController,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          labelText: 'Password',
-                          labelStyle: TextStyle(
-                            fontSize: 18,
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                        ),
-                      ),
+                    SizedBox(
+                      width: 10,
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  // make button with rounded corners
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25),
-                    child: Container(
-                      width: 150,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: Colors.indigo,
-                      ),
-                      child: Center(
-                        child: MaterialButton(
-                          minWidth: double.infinity,
-                          height: double.infinity,
-                          // post data to server
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => userPage(),
-                              ),
-                            );
-                          },
-                          child: Text(
-                            'Login',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                            ),
-                          ),
-                        ),
-                      ),
+                    Text(
+                      'Login with Google',
+                      style: TextStyle(fontSize: 18, color: Colors.black),
                     ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                        'Don\'t have an account?',
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                      Container(
-                        child: FlatButton(
-                          child: Text(
-                            'Register',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.indigo,
-                            ),
-                          ),
-                          onPressed: () {
-                            Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => RegisterPage()),
-                              (Route<dynamic> route) => false,
-                            );
-                          },
-                        ),
-                      )
-                    ],
-                  ),
-                ],
+                  ],
+                ),
+                // color: Colors.indigo,
               ),
             ),
-          ),
-          //
-          Padding(
-            padding:
-                const EdgeInsets.only(left: 40, right: 40, top: 10, bottom: 10),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Divider(
-                    color: Colors.black,
-                    height: 10,
-                  ),
-                ),
-                Text(
-                  '    Atau    ',
-                  style: TextStyle(
-                    fontSize: 14,
-                  ),
-                ),
-                Expanded(
-                  child: Divider(
-                    color: Colors.black,
-                    height: 10,
-                  ),
-                ),
-              ],
+            SizedBox(
+              height: 150,
             ),
-          ),
-          Container(
-            height: 60,
-            margin: EdgeInsets.only(left: 15, right: 15, top: 10),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(30),
-              boxShadow: [
-                BoxShadow(
-                  offset: Offset(0, 10),
-                  blurRadius: 20,
-                  color: Colors.black12,
-                ),
-              ],
-            ),
-            child: MaterialButton(
-              minWidth: double.infinity,
-              height: 50,
-              onPressed: () {},
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image(
-                    image: AssetImage(
-                      'assets/img/google_logo.png',
-                    ),
-                    width: 30,
-                    height: 30,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    'Login with Google',
-                    style: TextStyle(fontSize: 18, color: Colors.black),
-                  ),
-                ],
-              ),
-              // color: Colors.indigo,
-            ),
-          ),
-        ],
-      ),
-    )));
+          ],
+        ),
+      )),
+    ));
   }
 }

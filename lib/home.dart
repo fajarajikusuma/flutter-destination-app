@@ -16,7 +16,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
-  int _selectedIndex = 2;
+  int _selectedIndex = 1;
 
   void _onInputTapped(int index) {
     setState(() {
@@ -27,7 +27,8 @@ class _HomePageState extends State<HomePage> {
   static const List<Widget> _pages = <Widget>[
     SearchPage(),
     Beranda(),
-    LoginPage(),
+    // LoginPage(),
+    userPage(),
   ];
 
   Widget build(BuildContext context) {

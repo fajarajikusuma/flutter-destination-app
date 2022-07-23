@@ -305,7 +305,13 @@ class _BerandaState extends State<Beranda> {
                                                     'assets/img/1.jpg'),
                                                 fit: BoxFit.cover,
                                                 child: InkWell(
-                                                  onTap: () {},
+                                                  onTap: () {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                DetailItem()));
+                                                  },
                                                 ),
                                               ),
                                             ),

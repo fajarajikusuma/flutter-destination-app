@@ -77,159 +77,167 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Mangkat',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 150,
                 ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                'Register your account here!',
-                style: TextStyle(
-                  fontSize: 20,
-                ),
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Container(
-                  width: double.infinity,
-                  height: 300,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        offset: Offset(0, 10),
-                        blurRadius: 20,
-                        color: Colors.black12,
-                      ),
-                    ],
+                Text(
+                  'Mangkat',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
                   ),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 25),
-                        child: Container(
-                          child: TextField(
-                            controller: _usernameController,
-                            decoration: InputDecoration(
-                              labelText: 'Username',
-                              labelStyle: TextStyle(
-                                fontSize: 18,
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                            ),
-                          ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  'Register your account here!',
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+                SizedBox(
+                  height: 40,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Container(
+                    width: double.infinity,
+                    height: 300,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          offset: Offset(0, 10),
+                          blurRadius: 20,
+                          color: Colors.black12,
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 25),
-                        child: Container(
-                          child: TextField(
-                            controller: _passwordController,
-                            obscureText: true,
-                            decoration: InputDecoration(
-                              labelText: 'Password',
-                              labelStyle: TextStyle(
-                                fontSize: 18,
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                            ),
-                          ),
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 30,
                         ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      // make button with rounded corners
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 25),
-                        child: Container(
-                          width: 150,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: Colors.indigo,
-                          ),
-                          child: Center(
-                            child: MaterialButton(
-                              minWidth: double.infinity,
-                              height: double.infinity,
-                              // post data to server
-                              onPressed: () {
-                                registerUser();
-                              },
-                              child: Text(
-                                'Register',
-                                style: TextStyle(
-                                  color: Colors.white,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 25),
+                          child: Container(
+                            child: TextField(
+                              controller: _usernameController,
+                              decoration: InputDecoration(
+                                labelText: 'Username',
+                                labelStyle: TextStyle(
                                   fontSize: 18,
                                 ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text(
-                            'Don\'t have an account?',
-                            style: TextStyle(
-                              fontSize: 16,
-                            ),
-                          ),
-                          Container(
-                            child: FlatButton(
-                              child: Text(
-                                'Login',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.indigo,
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 25),
+                          child: Container(
+                            child: TextField(
+                              controller: _passwordController,
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                labelText: 'Password',
+                                labelStyle: TextStyle(
+                                  fontSize: 18,
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30),
                                 ),
                               ),
-                              onPressed: () {
-                                Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomePage()),
-                                  (Route<dynamic> route) => false,
-                                );
-                              },
                             ),
-                          )
-                        ],
-                      ),
-                    ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        // make button with rounded corners
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 25),
+                          child: Container(
+                            width: 150,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              color: Colors.indigo,
+                            ),
+                            child: Center(
+                              child: MaterialButton(
+                                minWidth: double.infinity,
+                                height: double.infinity,
+                                // post data to server
+                                onPressed: () {
+                                  registerUser();
+                                },
+                                child: Text(
+                                  'Register',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              'Don\'t have an account?',
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
+                            Container(
+                              child: FlatButton(
+                                child: Text(
+                                  'Login',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.indigo,
+                                  ),
+                                ),
+                                onPressed: () {
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LoginPage()),
+                                    (Route<dynamic> route) => false,
+                                  );
+                                },
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+                SizedBox(
+                  height: 320,
+                )
+              ],
+            ),
           ),
         ),
       ),
