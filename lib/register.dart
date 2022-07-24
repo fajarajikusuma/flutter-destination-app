@@ -16,7 +16,7 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController _passwordController = TextEditingController();
   void registerUser() {
     // send post request to server and save response in variable
-    var url = Uri.parse('http://54.169.198.245:5050/auth/register');
+    var url = Uri.parse('http://3.1.84.135:5001/auth/register');
     var body = {
       'username': _usernameController.text,
       'password': _passwordController.text,

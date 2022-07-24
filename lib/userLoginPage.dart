@@ -21,8 +21,8 @@ class _userPageState extends State<userPage> {
 
   Future<List> getData() async {
     var user_id = GetStorage().read('user_id');
-    final response = await http.get(
-        Uri.parse("http://192.168.90.112:5001/transactions/user/$user_id"));
+    final response = await http
+        .get(Uri.parse("http://3.1.84.135:5001/transactions/user/$user_id"));
     var responseJson = json.decode(response.body);
     return responseJson['data'];
   }

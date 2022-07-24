@@ -120,11 +120,12 @@ class MyHomePage extends StatelessWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(builder: (context) {
-                                    if (isLoggedIn != null) {
-                                      return HomePage(selected: 1);
+                                    if (isLoggedIn == null) {
+                                      return HomePage(selected: 2);
                                     } else {
-                                      return LoginPage();
+                                      return HomePage(selected: 1);
                                     }
+                                    ;
                                   }),
                                 );
                               },

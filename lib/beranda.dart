@@ -30,7 +30,7 @@ class _BerandaState extends State<Beranda> {
   final String LoggedIn = GetStorage().read('username');
   Future<List> getData() async {
     final response =
-        await http.get(Uri.parse("http://192.168.90.112:5001/destinations"));
+        await http.get(Uri.parse("http://3.1.84.135:5001/destinations"));
     Map<String, dynamic> data = json.decode(response.body);
     return data['data'];
   }

@@ -5,6 +5,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 
+import 'login.dart';
+
 class DetailItem extends StatefulWidget {
   final int destination_id;
   // callback with return value
@@ -20,7 +22,7 @@ class _DetailItemState extends State<DetailItem> {
   int numOfItems = 1;
   Future<List> getData() async {
     final response = await http.get(Uri.parse(
-        "http://192.168.90.112:5001/destinations/id/${widget.destination_id}"));
+        "http://3.1.84.135:5001/destinations/id/${widget.destination_id}"));
     Map<String, dynamic> data = json.decode(response.body);
     return data['data'];
   }
@@ -29,7 +31,7 @@ class _DetailItemState extends State<DetailItem> {
     var data = await getData();
     var total = data[0]['price'] * numOfItems;
     final response = await http
-        .post(Uri.parse("http://192.168.90.112:5001/transactions"), body: {
+        .post(Uri.parse("http://3.1.84.135:5001/transactions"), body: {
       'userId': user_id.toString(),
       'destinationId': destination_id.toString(),
       'quantity': numOfItems.toString(),
@@ -287,6 +289,10 @@ class _DetailItemState extends State<DetailItem> {
                                                                     'Confirm'),
                                                                 onPressed: () {
                                                                   // get value from GetSTORAGE
+                                                                  var isLoggedIn =
+                                                                      GetStorage()
+                                                                          .read(
+                                                                              'username');
                                                                   var id_user =
                                                                       GetStorage()
                                                                           .read(
@@ -296,11 +302,27 @@ class _DetailItemState extends State<DetailItem> {
                                                                       widget
                                                                           .destination_id,
                                                                       numOfItems);
-                                                                  Navigator.push(
+                                                                  // Navigator.push(
+                                                                  //     context,
+                                                                  //     MaterialPageRoute(
+                                                                  //         builder: (context) =>
+                                                                  //             HomePage(selected: 1)));
+                                                                  Navigator.pushAndRemoveUntil(
                                                                       context,
                                                                       MaterialPageRoute(
-                                                                          builder: (context) =>
-                                                                              HomePage(selected: 1)));
+                                                                          builder:
+                                                                              (context) {
+                                                                    if (isLoggedIn !=
+                                                                        null) {
+                                                                      return HomePage(
+                                                                          selected:
+                                                                              1);
+                                                                    } else {
+                                                                      return LoginPage();
+                                                                    }
+                                                                  }),
+                                                                      (route) =>
+                                                                          false);
                                                                 },
                                                               ),
                                                             ],
