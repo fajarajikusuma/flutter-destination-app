@@ -37,9 +37,6 @@ class _DetailItemState extends State<DetailItem> {
       'quantity': numOfItems.toString(),
       'total': total.toString()
     });
-    // redirect to home page
-    // Navigator.push(
-    //     context, MaterialPageRoute(builder: (context) => HomePage(selected: 1)));
   }
 
   Widget build(BuildContext context) {
@@ -318,7 +315,9 @@ class _DetailItemState extends State<DetailItem> {
                                                                           selected:
                                                                               1);
                                                                     } else {
-                                                                      return LoginPage();
+                                                                      return HomePage(
+                                                                          selected:
+                                                                              2);
                                                                     }
                                                                   }),
                                                                       (route) =>

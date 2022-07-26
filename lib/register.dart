@@ -15,63 +15,91 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   void registerUser() {
+    // trim to remove leading or trailing white space
+    String username = _usernameController.text.trim();
+    String password = _passwordController.text.trim();
+
     // send post request to server and save response in variable
-    var url = Uri.parse('http://3.1.84.135:5001/auth/register');
-    var body = {
-      'username': _usernameController.text,
-      'password': _passwordController.text,
-    };
-    http.post(url, body: body).then((response) {
-      print(response.body);
-      // compare if message property equals 'Username already exists'
-      if (response.body.contains('Username already exists')) {
-        // show error message
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Text('Error'),
-              content: Text('Username already exists'),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text('Close'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    // clear username and password fields
-                    _usernameController.clear();
-                    _passwordController.clear();
-                  },
-                ),
-              ],
-            );
-          },
-        );
-      } else {
-        // show dialog with message 'Registration successful'
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Text('Registration successful'),
-              content: Text('Please login to continue'),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text('OK'),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => LoginPage(),
-                      ),
-                    );
-                  },
-                ),
-              ],
-            );
-          },
-        );
-      }
-    });
+    if (username.isNotEmpty && password.isNotEmpty) {
+      var url = Uri.parse('http://3.1.84.135:5001/auth/register');
+      var body = {
+        'username': _usernameController.text,
+        'password': _passwordController.text,
+      };
+      http.post(url, body: body).then((response) {
+        print(response.body);
+        // compare if message property equals 'Username already exists'
+        if (response.body.contains('Username already exists')) {
+          // show error message
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text('Error'),
+                content: Text('Username already exists'),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text('Close'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      // clear username and password fields
+                      _usernameController.clear();
+                      _passwordController.clear();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        } else {
+          // show dialog with message 'Registration successful'
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text('Registration successful'),
+                content: Text('Please login to continue'),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text('OK'),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LoginPage(),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        }
+      });
+    } else {
+      // show error message
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('Please fill in all fields'),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Close'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  // clear username and password fields
+                  _usernameController.clear();
+                  _passwordController.clear();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
   @override
@@ -221,7 +249,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                   Navigator.pushAndRemoveUntil(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => LoginPage()),
+                                        builder: (context) => HomePage(
+                                              selected: 2,
+                                            )),
                                     (Route<dynamic> route) => false,
                                   );
                                 },
